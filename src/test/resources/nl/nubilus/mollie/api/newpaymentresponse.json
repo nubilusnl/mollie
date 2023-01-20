@@ -1,0 +1,37 @@
+{
+  "resource": "payment",
+  "id": "tr_KHjxr6zD6a",
+  "mode": "test",
+  "createdAt": "2023-01-16T07:54:46+00:00",
+  "amount": {
+    "value": "24.20",
+    "currency": "EUR"
+  },
+  "description": "Payment for invoice: invoiceid1245",
+  "method": null,
+  "metadata": null,
+  "status": "open",
+  "isCancelable": false,
+  "expiresAt": "2023-01-16T08:09:46+00:00",
+  "profileId": "pfl_FpT6su23xZ",
+  "sequenceType": "oneoff",
+  "redirectUrl": "https://webshop.example.org/order/12345/",
+  "_links": {
+    "self": {
+      "href": "https://api.mollie.com/v2/payments/tr_KHjxr6zD6a",
+      "type": "application/hal+json"
+    },
+    "checkout": {
+      "href": "https://www.mollie.com/checkout/select-method/KHjxr6zD6a",
+      "type": "text/html"
+    },
+    "dashboard": {
+      "href": "https://my.mollie.com/dashboard/org_2074801/payments/tr_KHjxr6zD6a",
+      "type": "text/html"
+    },
+    "documentation": {
+      "href": "https://docs.mollie.com/reference/v2/payments-api/create-payment",
+      "type": "text/html"
+    }
+  }
+}

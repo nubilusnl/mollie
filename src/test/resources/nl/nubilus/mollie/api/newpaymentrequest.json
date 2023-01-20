@@ -1,0 +1,8 @@
+{
+  "amount": {
+    "currency": "EUR",
+    "value": "24.20"
+  },
+  "description": "Payment for invoice: invoiceid1245",
+  "redirectUrl": "https://webshop.example.org/order/12345/"
+}

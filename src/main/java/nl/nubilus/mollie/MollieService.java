@@ -1,10 +1,21 @@
 package nl.nubilus.mollie;
 
+import nl.nubilus.mollie.payment.MolliePaymentService;
+
 public class MollieService {
 
-    private static final String TEST = "test";
+    private final MollieConfiguration mollieConfiguration;
 
-    public String test() {
-        return TEST;
+    public MollieService(MollieConfiguration mollieConfiguration) {
+        this.mollieConfiguration = mollieConfiguration;
+
+    }
+
+    public MolliePaymentService createMolliePaymentService() {
+        return new MolliePaymentService(mollieConfiguration);
+    }
+
+    public MollieConfiguration getMollieConfiguration() {
+        return mollieConfiguration;
     }
 }
