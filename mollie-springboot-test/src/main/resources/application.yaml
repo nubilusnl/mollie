@@ -1,0 +1,3 @@
+mollie:
+  apikey: fakeapikeymollie
+  url: https://api.mollie.com/v2

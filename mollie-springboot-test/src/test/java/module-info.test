@@ -1,0 +1,14 @@
+--add-opens
+  mollie.springboot.test/nl.nubilus.mollie.libtest=org.junit.platform.commons
+
+--add-reads
+  mollie.springboot.test=org.junit.jupiter.api
+--add-reads
+  mollie.springboot.test=org.assertj.core
+--add-reads
+  mollie.springboot.test=spring.context
+--add-reads
+  mollie.springboot.test/nl.nubilus.mollie.libtest.cucumber=spring.beans
+
+--add-reads
+  mollie.springboot.test/nl.nubilus.mollie.libtest.cucumber=spring.beans

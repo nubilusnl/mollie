@@ -1,0 +1,11 @@
+{
+  "checkoutUrl": "https://www.mollie.com/checkout/select-method/KHjxr6zD6a",
+  "paymentId": "tr_KHjxr6zD6a",
+  "payment": {
+    "amount": 14.34,
+    "description": "A simple payment",
+    "currency": "EUR",
+    "redirectUrl": "https://webshop.example.org/order/12345/"
+  },
+  "createdAt": "2023-01-16T07:54:46"
+}

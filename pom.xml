@@ -6,7 +6,7 @@
 
     <groupId>nl.nubilus</groupId>
     <artifactId>mollie</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>mollie</name>
@@ -46,5 +46,6 @@
     </licenses>
     <modules>
         <module>mollie-library</module>
+        <module>mollie-springboot-test</module>
     </modules>
 </project>

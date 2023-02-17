@@ -1,4 +1,4 @@
-module mollie {
+module nl.nubilus.mollie {
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.core;
     exports nl.nubilus.mollie;
