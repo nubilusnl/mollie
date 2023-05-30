@@ -6,7 +6,7 @@
 
     <groupId>nl.nubilus</groupId>
     <artifactId>mollie</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.2.0</version>
     <packaging>pom</packaging>
 
     <name>mollie</name>
