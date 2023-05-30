@@ -5,10 +5,7 @@ import nl.nubilus.mollie.exception.MollieHttpException;
 import nl.nubilus.mollie.libtest.payment.PaymentService;
 import nl.nubilus.mollie.payment.PaymentInfo;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/rest/payment")
@@ -24,5 +21,10 @@ public class InvoiceRestEndpoint {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public PaymentInfo createPayment(@RequestBody Invoice invoice) throws MollieConnectionException, MollieHttpException {
         return paymentService.createPayment(invoice);
+    }
+
+    @GetMapping(path = "{paymentId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public PaymentInfo getPaymentStatus(@PathVariable("paymentId") String paymentId) throws MollieConnectionException, MollieHttpException {
+        return paymentService.getPayment(paymentId);
     }
 }

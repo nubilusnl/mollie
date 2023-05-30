@@ -2,12 +2,9 @@ package nl.nubilus.mollie.payment;
 
 import nl.nubilus.mollie.MollieConfiguration;
 import nl.nubilus.mollie.api.MollieClientFactory;
-import nl.nubilus.mollie.api.MolliePaymentClient;
+import nl.nubilus.mollie.api.payment.*;
 import nl.nubilus.mollie.api.links.MollieLink;
 import nl.nubilus.mollie.api.links.MollieLinks;
-import nl.nubilus.mollie.api.payment.MollieAmount;
-import nl.nubilus.mollie.api.payment.MolliePaymentRequest;
-import nl.nubilus.mollie.api.payment.MolliePaymentResponse;
 import nl.nubilus.mollie.exception.MollieConnectionException;
 import nl.nubilus.mollie.exception.MollieHttpException;
 import org.assertj.core.data.Percentage;
@@ -60,6 +57,7 @@ class MolliePaymentServiceTest {
         molliePaymentResponse.getLinks().getCheckout().setHref("https://www.mollie.com/checkout/select-method/4WgLaGrDTo");
         molliePaymentResponse.setId("tr_4WgLaGrDTo");
         molliePaymentResponse.setAmount(new MollieAmount());
+        molliePaymentResponse.setStatus(MolliePaymentStatus.OPEN);
         molliePaymentResponse.getAmount().setValue("12.40");
         molliePaymentResponse.getAmount().setCurrency("EUR");
         molliePaymentResponse.setDescription("new payment");
@@ -73,12 +71,24 @@ class MolliePaymentServiceTest {
         assertThat(paymentInfo.getCreatedAt()).isCloseTo(expectedAt, within(1, ChronoUnit.SECONDS));
         assertThat(paymentInfo.getCheckoutUrl()).isEqualTo("https://www.mollie.com/checkout/select-method/4WgLaGrDTo");
         assertThat(paymentInfo.getPaymentId()).isEqualTo("tr_4WgLaGrDTo");
+        assertThat(paymentInfo.getStatus()).isEqualTo(PaymentStatus.OPEN);
         MolliePaymentRequest request = molliePaymentRequestArgumentCaptor.getValue();
         assertThat(request.getAmount().getCurrency()).isEqualTo("EUR");
         assertThat(request.getAmount().getValue()).isEqualTo("12.40");
         assertThat(request.getRedirectUrl()).isEqualTo("http://localhost");
         assertThat(request.getDescription()).isEqualTo("new payment");
+    }
 
-
+    @Test
+    void getPaymentStatus() throws MollieConnectionException, MollieHttpException {
+        MolliePaymentResponse molliePaymentResponse = new MolliePaymentResponse();
+        molliePaymentResponse.setAmount(new MollieAmount());
+        molliePaymentResponse.getAmount().setValue("12.40");
+        molliePaymentResponse.getAmount().setCurrency("EUR");
+        molliePaymentResponse.setStatus(MolliePaymentStatus.PAID);
+        molliePaymentResponse.setCreatedAt("2023-01-13T07:53:22+00:00");
+        when(molliePaymentClient.getPaymentStatus("tr_4WgLaGrDTo")).thenReturn(molliePaymentResponse);
+        PaymentInfo paymentInfo = molliePaymentService.getPaymentStatus("tr_4WgLaGrDTo");
+        assertThat(paymentInfo.getStatus()).isEqualTo(PaymentStatus.PAID);
     }
 }

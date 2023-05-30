@@ -7,5 +7,6 @@
     "currency": "EUR",
     "redirectUrl": "https://webshop.example.org/order/12345/"
   },
-  "createdAt": "2023-01-16T07:54:46"
+  "createdAt": "2023-01-16T07:54:46",
+  "status": "OPEN"
 }

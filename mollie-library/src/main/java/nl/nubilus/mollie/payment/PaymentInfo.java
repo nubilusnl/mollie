@@ -12,6 +12,8 @@ public class PaymentInfo {
 
     private LocalDateTime createdAt;
 
+    private PaymentStatus status;
+
     public String getCheckoutUrl() {
         return checkoutUrl;
     }
@@ -42,5 +44,13 @@ public class PaymentInfo {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public PaymentStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PaymentStatus status) {
+        this.status = status;
     }
 }

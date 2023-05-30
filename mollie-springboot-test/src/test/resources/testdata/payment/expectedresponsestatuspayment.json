@@ -1,0 +1,11 @@
+{
+  "checkoutUrl": "https://www.mollie.com/payscreen/select-method/WDqYK6vllg",
+  "paymentId": "tr_WDqYK6vllg",
+  "payment": {
+    "amount": 10.00,
+    "description": "Order #12345",
+    "currency": "EUR"
+  },
+  "createdAt": "2018-03-20T13:13:37",
+  "status": "OPEN"
+}

@@ -28,7 +28,7 @@ public class PaymentStepdefs {
     }
 
     @When("invoice {string} is used to send payment")
-    public void invoiceInvoiceJsonIsUsedToSendPayment(String fileName) throws IOException {
+    public void invoiceInvoiceJsonIsUsedToSendPayment(String fileName) {
         stubFor(post("/mollie/payments").willReturn(okJson(readFile("testdata/payment/newpaymentresponse.json"))));
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -62,4 +62,9 @@ public class PaymentStepdefs {
     }
 
 
+    @When("the payment status for payment {string} is being retrieved")
+    public void thePaymentStatusForPaymentTr_WDqYKVllgIsBeingRetrieved(String paymentId) {
+        stubFor(get(String.format("/mollie/payments/%s", paymentId)).willReturn(okJson(readFile("testdata/payment/statuspaymentresponse.json"))));
+        response = testRestTemplate.getForEntity(String.format("/rest/payment/%s", paymentId), String.class);
+    }
 }

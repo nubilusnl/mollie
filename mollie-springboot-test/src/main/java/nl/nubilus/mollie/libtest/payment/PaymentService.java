@@ -29,4 +29,8 @@ public class PaymentService {
         payment.setCurrency(Currency.getInstance("EUR"));
         return mollieService.createMolliePaymentService().createPayment(payment);
     }
+
+    public PaymentInfo getPayment(String paymentId) throws MollieConnectionException, MollieHttpException {
+        return mollieService.createMolliePaymentService().getPaymentStatus(paymentId);
+    }
 }
