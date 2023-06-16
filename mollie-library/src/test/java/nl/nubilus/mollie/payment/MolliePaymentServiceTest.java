@@ -2,9 +2,9 @@ package nl.nubilus.mollie.payment;
 
 import nl.nubilus.mollie.MollieConfiguration;
 import nl.nubilus.mollie.api.MollieClientFactory;
-import nl.nubilus.mollie.api.payment.*;
 import nl.nubilus.mollie.api.links.MollieLink;
 import nl.nubilus.mollie.api.links.MollieLinks;
+import nl.nubilus.mollie.api.payment.*;
 import nl.nubilus.mollie.exception.MollieConnectionException;
 import nl.nubilus.mollie.exception.MollieHttpException;
 import org.assertj.core.data.Percentage;
@@ -19,7 +19,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Currency;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
@@ -46,20 +45,16 @@ class MolliePaymentServiceTest {
     }
 
     @Test
-    void simplePayment() throws MollieConnectionException, MollieHttpException {
-        Payment payment = new Payment(BigDecimal.valueOf(12.4), "new payment");
-        payment.setCurrency(Currency.getInstance("EUR"));
-        payment.setRedirectUrl("http://localhost");
+    void simplePayment() throws MollieConnectionException, MollieHttpException, PaymentCreationException {
+        Payment payment = new PaymentBuilder().setAmount(BigDecimal.valueOf(12.4)).setDescription("new payment").setRedirectUrl("http://localhost").createPayment();
         MolliePaymentResponse molliePaymentResponse = new MolliePaymentResponse();
         molliePaymentResponse.setCreatedAt("2023-01-13T07:53:22+00:00");
         molliePaymentResponse.setLinks(new MollieLinks());
         molliePaymentResponse.getLinks().setCheckout(new MollieLink());
         molliePaymentResponse.getLinks().getCheckout().setHref("https://www.mollie.com/checkout/select-method/4WgLaGrDTo");
         molliePaymentResponse.setId("tr_4WgLaGrDTo");
-        molliePaymentResponse.setAmount(new MollieAmount());
+        molliePaymentResponse.setAmount(new MollieAmount("EUR", "12.40"));
         molliePaymentResponse.setStatus(MolliePaymentStatus.OPEN);
-        molliePaymentResponse.getAmount().setValue("12.40");
-        molliePaymentResponse.getAmount().setCurrency("EUR");
         molliePaymentResponse.setDescription("new payment");
         ArgumentCaptor<MolliePaymentRequest> molliePaymentRequestArgumentCaptor = ArgumentCaptor.forClass(MolliePaymentRequest.class);
 
@@ -82,9 +77,7 @@ class MolliePaymentServiceTest {
     @Test
     void getPaymentStatus() throws MollieConnectionException, MollieHttpException {
         MolliePaymentResponse molliePaymentResponse = new MolliePaymentResponse();
-        molliePaymentResponse.setAmount(new MollieAmount());
-        molliePaymentResponse.getAmount().setValue("12.40");
-        molliePaymentResponse.getAmount().setCurrency("EUR");
+        molliePaymentResponse.setAmount(new MollieAmount("EUR", "12.40"));
         molliePaymentResponse.setStatus(MolliePaymentStatus.PAID);
         molliePaymentResponse.setCreatedAt("2023-01-13T07:53:22+00:00");
         when(molliePaymentClient.getPaymentStatus("tr_4WgLaGrDTo")).thenReturn(molliePaymentResponse);

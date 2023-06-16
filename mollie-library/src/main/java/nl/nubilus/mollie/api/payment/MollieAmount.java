@@ -4,6 +4,14 @@ public class MollieAmount {
     private String currency;
     private String value;
 
+    public MollieAmount(String currency, String value) {
+        this.currency = currency;
+        this.value = value;
+    }
+
+    public MollieAmount() {
+    }
+
     public String getCurrency() {
         return currency;
     }

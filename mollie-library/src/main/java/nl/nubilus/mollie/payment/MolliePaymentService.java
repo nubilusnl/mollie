@@ -2,7 +2,10 @@ package nl.nubilus.mollie.payment;
 
 import nl.nubilus.mollie.MollieConfiguration;
 import nl.nubilus.mollie.api.MollieClientFactory;
-import nl.nubilus.mollie.api.payment.*;
+import nl.nubilus.mollie.api.payment.MollieAmount;
+import nl.nubilus.mollie.api.payment.MolliePaymentClient;
+import nl.nubilus.mollie.api.payment.MolliePaymentRequest;
+import nl.nubilus.mollie.api.payment.MolliePaymentResponse;
 import nl.nubilus.mollie.exception.MollieConnectionException;
 import nl.nubilus.mollie.exception.MollieHttpException;
 
@@ -43,18 +46,14 @@ public class MolliePaymentService {
     }
 
     private Payment convertToPayment(MolliePaymentResponse molliePaymentResponse) {
-        Payment payment = new Payment(new BigDecimal(molliePaymentResponse.getAmount().getValue()), molliePaymentResponse.getDescription());
-        payment.setRedirectUrl(molliePaymentResponse.getRedirectUrl());
-        payment.setCurrency(Currency.getInstance(molliePaymentResponse.getAmount().getCurrency()));
-        return payment;
+        return new Payment(new BigDecimal(molliePaymentResponse.getAmount().getValue()), molliePaymentResponse.getDescription(),
+                Currency.getInstance(molliePaymentResponse.getAmount().getCurrency()), molliePaymentResponse.getRedirectUrl());
     }
 
     private MolliePaymentRequest convertToMolliePaymentRequest(Payment payment) {
         MolliePaymentRequest request = new MolliePaymentRequest();
         request.setRedirectUrl(payment.getRedirectUrl());
-        request.setAmount(new MollieAmount());
-        request.getAmount().setCurrency(payment.getCurrency().getCurrencyCode());
-        request.getAmount().setValue(payment.getAmount().toString());
+        request.setAmount(new MollieAmount(payment.getCurrency().getCurrencyCode(), payment.getAmount().toString()));
         request.setDescription(payment.getDescription());
         return request;
     }

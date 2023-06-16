@@ -34,7 +34,7 @@ class MollieRestPaymentClientTest {
     private MollieConfiguration mollieConfiguration;
 
     @RegisterExtension
-    private final static WireMockExtension wiremock = WireMockExtension.newInstance()
+    public final static WireMockExtension wiremock = WireMockExtension.newInstance()
             .options(wireMockConfig().dynamicPort())
             .configureStaticDsl(true)
             .build();
@@ -54,9 +54,7 @@ class MollieRestPaymentClientTest {
                 .withRequestBody(equalToJson(readFile("nl/nubilus/mollie/api/newpaymentrequest.json"))).withHeader("Authorization", equalTo("Bearer apikey")));
         MolliePaymentRequest molliePaymentRequest = new MolliePaymentRequest();
         molliePaymentRequest.setDescription("Payment for invoice: invoiceid1245");
-        molliePaymentRequest.setAmount(new MollieAmount());
-        molliePaymentRequest.getAmount().setCurrency("EUR");
-        molliePaymentRequest.getAmount().setValue("24.20");
+        molliePaymentRequest.setAmount(new MollieAmount("EUR", "24.20"));
         molliePaymentRequest.setRedirectUrl("https://webshop.example.org/order/12345/");
 
         MolliePaymentResponse paymentResponse = molliePaymentClient.createPayment(molliePaymentRequest);
@@ -76,9 +74,7 @@ class MollieRestPaymentClientTest {
                 .withRequestBody(equalToJson(readFile("nl/nubilus/mollie/api/newpaymentrequest.json"))).withHeader("Authorization", equalTo("Bearer apikey")));
         MolliePaymentRequest molliePaymentRequest = new MolliePaymentRequest();
         molliePaymentRequest.setDescription("Payment for invoice: invoiceid1245");
-        molliePaymentRequest.setAmount(new MollieAmount());
-        molliePaymentRequest.getAmount().setCurrency("EUR");
-        molliePaymentRequest.getAmount().setValue("24.20");
+        molliePaymentRequest.setAmount(new MollieAmount("EUR", "24.20"));
         molliePaymentRequest.setRedirectUrl("https://webshop.example.org/order/12345/");
 
         MollieHttpException exception = assertThrows(MollieHttpException.class, () -> molliePaymentClient.createPayment(molliePaymentRequest));
@@ -95,9 +91,7 @@ class MollieRestPaymentClientTest {
                 .withRequestBody(equalToJson(readFile("nl/nubilus/mollie/api/newpaymentrequest.json"))).withHeader("Authorization", equalTo("Bearer apikey")));
         MolliePaymentRequest molliePaymentRequest = new MolliePaymentRequest();
         molliePaymentRequest.setDescription("Payment for invoice: invoiceid1245");
-        molliePaymentRequest.setAmount(new MollieAmount());
-        molliePaymentRequest.getAmount().setCurrency("EUR");
-        molliePaymentRequest.getAmount().setValue("24.20");
+        molliePaymentRequest.setAmount(new MollieAmount("EUR", "24.20"));
         molliePaymentRequest.setRedirectUrl("https://webshop.example.org/order/12345/");
 
         MollieHttpException exception = assertThrows(MollieHttpException.class, () -> molliePaymentClient.createPayment(molliePaymentRequest));
@@ -115,9 +109,7 @@ class MollieRestPaymentClientTest {
                 .withRequestBody(equalToJson(readFile("nl/nubilus/mollie/api/newpaymentrequest.json"))).withHeader("Authorization", equalTo("Bearer apikey")));
         MolliePaymentRequest molliePaymentRequest = new MolliePaymentRequest();
         molliePaymentRequest.setDescription("Payment for invoice: invoiceid1245");
-        molliePaymentRequest.setAmount(new MollieAmount());
-        molliePaymentRequest.getAmount().setCurrency("EUR");
-        molliePaymentRequest.getAmount().setValue("24.20");
+        molliePaymentRequest.setAmount(new MollieAmount("EUR", "24.20"));
         molliePaymentRequest.setRedirectUrl("https://webshop.example.org/order/12345/");
 
         MollieConnectionException exception = assertThrows(MollieConnectionException.class, () -> molliePaymentClient.createPayment(molliePaymentRequest));
@@ -156,9 +148,7 @@ class MollieRestPaymentClientTest {
         stubFor(post("/payments").willReturn(aResponse().withFault(Fault.CONNECTION_RESET_BY_PEER)));
         MolliePaymentRequest molliePaymentRequest = new MolliePaymentRequest();
         molliePaymentRequest.setDescription("Payment for invoice: invoiceid1245");
-        molliePaymentRequest.setAmount(new MollieAmount());
-        molliePaymentRequest.getAmount().setCurrency("EUR");
-        molliePaymentRequest.getAmount().setValue("24.20");
+        molliePaymentRequest.setAmount(new MollieAmount("EUR", "24.20"));
         molliePaymentRequest.setRedirectUrl("https://webshop.example.org/order/12345/");
         assertThatThrownBy(() -> molliePaymentClient.createPayment(molliePaymentRequest)).isInstanceOf(MollieConnectionException.class);
     }
@@ -168,9 +158,7 @@ class MollieRestPaymentClientTest {
         mollieConfiguration.setMollieUrl("woit");
         MolliePaymentRequest molliePaymentRequest = new MolliePaymentRequest();
         molliePaymentRequest.setDescription("Payment for invoice: invoiceid1245");
-        molliePaymentRequest.setAmount(new MollieAmount());
-        molliePaymentRequest.getAmount().setCurrency("EUR");
-        molliePaymentRequest.getAmount().setValue("24.20");
+        molliePaymentRequest.setAmount(new MollieAmount("EUR", "24.20"));
         molliePaymentRequest.setRedirectUrl("https://webshop.example.org/order/12345/");
         assertThatThrownBy(() -> molliePaymentClient.createPayment(molliePaymentRequest)).isInstanceOf(MollieConnectionException.class);
     }

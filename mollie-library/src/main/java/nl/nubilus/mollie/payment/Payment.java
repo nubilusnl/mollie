@@ -13,16 +13,18 @@ public class Payment {
 
     private String redirectUrl;
 
-    public Payment(BigDecimal amount, String description) {
+    public Payment(BigDecimal amount, String description, Currency currency, String redirectUrl) {
         this.setAmount(amount);
         this.setDescription(description);
+        this.setCurrency(currency);
+        this.setRedirectUrl(redirectUrl);
     }
 
     public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    private void setAmount(BigDecimal amount) {
         if (amount != null) {
             this.amount = amount.setScale(2, RoundingMode.HALF_UP);
         }
@@ -32,7 +34,7 @@ public class Payment {
         return description;
     }
 
-    public void setDescription(String description) {
+    private void setDescription(String description) {
         this.description = description;
     }
 
@@ -40,7 +42,7 @@ public class Payment {
         return currency;
     }
 
-    public void setCurrency(Currency currency) {
+    private void setCurrency(Currency currency) {
         this.currency = currency;
     }
 
@@ -48,7 +50,7 @@ public class Payment {
         return redirectUrl;
     }
 
-    public void setRedirectUrl(String redirectUrl) {
+    private void setRedirectUrl(String redirectUrl) {
         this.redirectUrl = redirectUrl;
     }
 }

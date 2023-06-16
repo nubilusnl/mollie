@@ -7,7 +7,7 @@ public enum MolliePaymentMethod {
     APPLEPAY("applepay"),
     BANCONTACT("bancontact"),
     BANKTRANSFER("banktransfer"),
-    BELFIUS("belfius "),
+    BELFIUS("belfius"),
     CREDITCARD("creditcard"),
     DIRECTDEBIT("directdebit"),
     EPS("eps"),

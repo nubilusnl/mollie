@@ -3,6 +3,7 @@ package nl.nubilus.mollie.libtest.invoice;
 import nl.nubilus.mollie.exception.MollieConnectionException;
 import nl.nubilus.mollie.exception.MollieHttpException;
 import nl.nubilus.mollie.libtest.payment.PaymentService;
+import nl.nubilus.mollie.payment.PaymentCreationException;
 import nl.nubilus.mollie.payment.PaymentInfo;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class InvoiceRestEndpoint {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public PaymentInfo createPayment(@RequestBody Invoice invoice) throws MollieConnectionException, MollieHttpException {
+    public PaymentInfo createPayment(@RequestBody Invoice invoice) throws MollieConnectionException, MollieHttpException, PaymentCreationException {
         return paymentService.createPayment(invoice);
     }
 

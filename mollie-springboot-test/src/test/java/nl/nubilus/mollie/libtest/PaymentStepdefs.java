@@ -41,7 +41,6 @@ public class PaymentStepdefs {
         assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
         String expected = readFile(String.format("testdata/payment/%s", fileName));
         JSONAssert.assertEquals(expected, response.getBody(), false);
-
     }
 
     public String readFile(String filePath) {
