@@ -3,6 +3,8 @@ package nl.nubilus.mollie.payment;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Currency;
+import java.util.List;
+import java.util.Locale;
 
 public class Payment {
 
@@ -12,6 +14,44 @@ public class Payment {
     private Currency currency;
 
     private String redirectUrl;
+
+
+    private List<PaymentMethod> methods;
+    private String cancelUrl;
+    private String webhookUrl;
+    private Locale locale;
+    private Locale restrictPaymentMethodsToCountry;
+    private Object metadata;
+    private String customerId;
+
+
+    public void setMethods(List<PaymentMethod> methods) {
+        this.methods = methods;
+    }
+
+    public void setCancelUrl(String cancelUrl) {
+        this.cancelUrl = cancelUrl;
+    }
+
+    public void setWebhookUrl(String webhookUrl) {
+        this.webhookUrl = webhookUrl;
+    }
+
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+
+    public void setRestrictPaymentMethodsToCountry(Locale restrictPaymentMethodsToCountry) {
+        this.restrictPaymentMethodsToCountry = restrictPaymentMethodsToCountry;
+    }
+
+    public void setMetadata(Object metadata) {
+        this.metadata = metadata;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
 
     public Payment(BigDecimal amount, String description, Currency currency, String redirectUrl) {
         this.setAmount(amount);

@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Currency;
+import java.util.List;
+import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -65,5 +67,20 @@ class PaymentBuilderTest {
                 .setDescription("omschrijving").setRedirectUrl("http://localhost")
                 .createPayment());
         assertThat(exception.getMessage()).isEqualTo("One of the required fields is null: amount: null, description: omschrijving or redirectUrl: http://localhost");
+    }
+
+    @Test
+    void createPaymentWithOptionalFields() throws PaymentCreationException {
+        Payment result = paymentBuilder.setCurrency(Currency.getInstance("USD"))
+                .setDescription("omschrijving")
+                .setAmount(BigDecimal.valueOf(12.5)).setRedirectUrl("http://localhost")
+                .setLocale(Locale.GERMAN)
+                .setRestrictPaymentMethodsToCountry(Locale.FRANCE)
+                .setMethods(List.of(PaymentMethod.CREDITCARD))
+                .createPayment();
+        assertThat(result.getAmount()).isEqualTo(BigDecimal.valueOf(12.5).setScale(2, RoundingMode.HALF_UP));
+        assertThat(result.getDescription()).isEqualTo("omschrijving");
+        assertThat(result.getCurrency()).isEqualTo(Currency.getInstance("USD"));
+        assertThat(result.getRedirectUrl()).isEqualTo("http://localhost");
     }
 }

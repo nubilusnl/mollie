@@ -1,13 +1,24 @@
 package nl.nubilus.mollie.payment;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Currency;
+import java.util.List;
+import java.util.Locale;
 
 public class PaymentBuilder {
     private BigDecimal amount;
     private String description;
     private Currency currency;
     private String redirectUrl;
+
+    private List<PaymentMethod> methods;
+    private String cancelUrl;
+    private String webhookUrl;
+    private Locale locale;
+    private Locale restrictPaymentMethodsToCountry;
+    private Object metadata;
+    private String customerId;
 
     public PaymentBuilder setAmount(BigDecimal amount) {
         this.amount = amount;
@@ -29,6 +40,41 @@ public class PaymentBuilder {
         return this;
     }
 
+    public PaymentBuilder setMethods(List<PaymentMethod> methods) {
+        this.methods = methods;
+        return this;
+    }
+
+    public PaymentBuilder setCancelUrl(String cancelUrl) {
+        this.cancelUrl = cancelUrl;
+        return this;
+    }
+
+    public PaymentBuilder setWebhookUrl(String webhookUrl) {
+        this.webhookUrl = webhookUrl;
+        return this;
+    }
+
+    public PaymentBuilder setLocale(Locale locale) {
+        this.locale = locale;
+        return this;
+    }
+
+    public PaymentBuilder setRestrictPaymentMethodsToCountry(Locale restrictPaymentMethodsToCountry) {
+        this.restrictPaymentMethodsToCountry = restrictPaymentMethodsToCountry;
+        return this;
+    }
+
+    public PaymentBuilder setMetadata(Object metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public PaymentBuilder setCustomerId(String customerId) {
+        this.customerId = customerId;
+        return this;
+    }
+
     /**
      * Create a payment, requires amount, description and redirectUrl. If there is no currency, we will default to EUR
      * @return the created payment
@@ -41,7 +87,15 @@ public class PaymentBuilder {
         if (currency == null) {
             currency = Currency.getInstance("EUR");
         }
-        return new Payment(amount, description, currency, redirectUrl);
+        Payment payment = new Payment(amount, description, currency, redirectUrl);
+        payment.setMethods(this.methods);
+        payment.setLocale(this.locale);
+        payment.setMetadata(this.metadata);
+        payment.setCancelUrl(this.cancelUrl);
+        payment.setCustomerId(this.customerId);
+        payment.setWebhookUrl(this.webhookUrl);
+        payment.setRestrictPaymentMethodsToCountry(this.restrictPaymentMethodsToCountry);
+        return payment;
     }
 
 }
